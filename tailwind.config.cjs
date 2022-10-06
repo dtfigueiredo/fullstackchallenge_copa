@@ -3,7 +3,7 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      'sans': ['Cairo'],
+      sans: ['Cairo'],
     },
     fontSize: {
       xs: ['12px', '16px'],
@@ -12,7 +12,7 @@ module.exports = {
       lg: ['20px', '28px'],
       xl: ['24px', '32px'],
       '2xl': ['32px', '40px'],
-      '3xl': ['48px', '56px']
+      '3xl': ['48px', '56px'],
     },
     colors: {
       black: '#0B0E16',
@@ -25,10 +25,10 @@ module.exports = {
       red: {
         300: '#BB2E57',
         500: '#AF053F',
-        700: '#300219'
-      }
+        700: '#300219',
+      },
     },
     extend: {},
   },
   plugins: [],
-}
+};
