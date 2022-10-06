@@ -5,7 +5,7 @@ import backArrow from '../assets/icones/backarrow.svg';
 import logo from '../assets/logo/logo-fundo-branco.svg';
 import { Input } from '../components/Input';
 
-export const Register = () => {
+export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
 
@@ -43,6 +43,7 @@ export const Register = () => {
               <Input
                 type="text"
                 name="name"
+                id="name"
                 placeholder="Digite seu nome e sobrenome"
               />
             </div>
@@ -57,6 +58,7 @@ export const Register = () => {
               <Input
                 type="text"
                 name="username"
+                id="username"
                 placeholder="Digite um nome de usuário"
               />
             </div>
@@ -71,6 +73,7 @@ export const Register = () => {
               <Input
                 type="email"
                 name="email"
+                id="email"
                 placeholder="Digite seu email"
               />
             </div>
@@ -86,6 +89,7 @@ export const Register = () => {
                 <Input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
+                  id="password"
                   placeholder="Digite sua senha"
                 />
 

@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import backArrow from '../assets/icones/backarrow.svg';
 import logo from '../assets/logo/logo-fundo-branco.svg';
+import { Icon } from '../components/Icon';
 import { Input } from '../components/Input';
 
 export const Login = () => {
@@ -22,10 +23,11 @@ export const Login = () => {
         <div className="w-full py-6 lg:py-[72px] flex flex-col justify-center items-center gap-2">
           <div className="w-full flex justify-start items-center">
             <a href="/">
-              <img
+              <Icon name="backarrow" />
+              {/* <img
                 src={backArrow}
                 className="w-8 h-8"
-              />
+              /> */}
             </a>
             <h2 className="ml-5 text-red-700 font-bold text-xl">
               Entre na sua conta
@@ -71,7 +73,7 @@ export const Login = () => {
               </div>
             </div>
 
-            <button className="border w-full mt-4 py-3 lg:py-4 px- 5 lg:px-6 text-base lg:text-lg font-bold bg-red-500 text-silver border-silver rounded-2xl transition-all hover:underline hover:opacity-80">
+            <button className="border w-full mt-4 py-3 lg:py-4 px-5 lg:px-6 text-base lg:text-lg font-bold bg-red-500 text-silver border-silver rounded-2xl transition-all hover:underline hover:opacity-80">
               Entrar
             </button>
           </form>
