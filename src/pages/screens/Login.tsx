@@ -1,9 +1,7 @@
-import logo from '../assets/logo/logo-fundo-branco.svg';
-import { Icon } from '../components';
-import { RegisterSubmitButton } from '../components/Button';
-import { InputBlock } from '../components/InputBlock';
+import { Icon, InputBlock, RegisterSubmitButton } from '../../components';
+import logo from '../../assets/logo/logo-fundo-branco.svg';
 
-export const SignUp = () => {
+export const Login = () => {
   return (
     <main className="min-h-screen bg-silver">
       <header className="flex justify-center items-center py-6 border-b border-red-300">
@@ -20,27 +18,11 @@ export const SignUp = () => {
               <Icon title="backarrow" />
             </a>
             <h2 className="ml-5 text-red-700 font-bold text-xl">
-              Crie sua conta
+              Entre na sua conta
             </h2>
           </header>
 
           <form className="w-full mt-8 flex flex-col gap-4">
-            <InputBlock
-              label="Seu nome"
-              type="text"
-              name="name"
-              id="name"
-              placeholder="Digite seu nome e sobrenome"
-              isPassword={false}
-            />
-            <InputBlock
-              label="Seu usuário"
-              type="text"
-              name="username"
-              id="username"
-              placeholder="Digite um nome de usuário"
-              isPassword={false}
-            />
             <InputBlock
               label="Seu email"
               type="email"
@@ -58,7 +40,7 @@ export const SignUp = () => {
               isPassword
             />
 
-            <RegisterSubmitButton title="Criar minha conta" />
+            <RegisterSubmitButton title="Entrar" />
           </form>
         </div>
       </main>

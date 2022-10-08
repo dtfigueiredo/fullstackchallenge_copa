@@ -1,5 +1,5 @@
-import heroImg from '../assets/imagem/img.png';
-import logo from '../assets/logo/logo-fundo-vinho.svg';
+import heroImg from '../../assets/imagem/img.png';
+import logo from '../../assets/logo/logo-fundo-vinho.svg';
 
 export const Home = () => {
   return (
