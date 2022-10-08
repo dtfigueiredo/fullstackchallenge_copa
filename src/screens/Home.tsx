@@ -27,14 +27,14 @@ export const Home = () => {
 
             <a
               href="/signup"
-              className="w-full inline-block cursor-pointer py-3 lg:py-4 px- 5 lg:px-6 text-center text-base lg:text-lg font-bold bg-silver border border-silver rounded-2xl transition-all hover:underline hover:opacity-80"
+              className="w-full inline-block cursor-pointer py-3 px-5 text-center text-base lg:text-lg font-bold bg-silver border border-silver rounded-2xl transition-all hover:underline hover:opacity-80"
             >
               Criar minha conta
             </a>
 
             <a
               href="/login"
-              className="w-full inline-block cursor-pointer py-3 lg:py-4 px- 5 lg:px-6 text-center text-base lg:text-lg font-bold text-silver border border-silver rounded-2xl transition-all hover:underline"
+              className="w-full inline-block cursor-pointer py-3 px-5 text-center text-base lg:text-lg font-bold text-silver border border-silver rounded-2xl transition-all hover:underline"
             >
               Fazer login
             </a>

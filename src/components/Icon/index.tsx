@@ -1,17 +1,13 @@
-import backarrow from './svgs/backarrow.svg'
+import { ReactComponent as backarrow } from './svgs/backarrow.svg';
 
 interface IconProps {
-    name: 'string'
+  title: string;
 }
 
-const icons = {
-    backarrow
-}
+const icons: { [key: string]: string } = { backarrow }; //mapa dos ícones
 
-export const Icon = ({ name }: IconProps) => {
-    const Element: any = icons[name]
+export const Icon = ({ title }: IconProps) => {
+  const Element = icons[title];
 
-    return (
-        <Element/>
-    )
-}
+  return <Element />;
+};
