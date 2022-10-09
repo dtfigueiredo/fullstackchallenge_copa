@@ -56,7 +56,10 @@ export const SignUp = () => {
               isPassword
             />
 
-            <RegisterSubmitButton title="Criar minha conta" />
+            <RegisterSubmitButton
+              title="Entrar"
+              route="/dashboard"
+            />
           </form>
         </div>
       </main>

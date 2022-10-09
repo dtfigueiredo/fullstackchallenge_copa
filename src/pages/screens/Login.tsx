@@ -40,7 +40,10 @@ export const Login = () => {
               isPassword
             />
 
-            <RegisterSubmitButton title="Entrar" />
+            <RegisterSubmitButton
+              title="Entrar"
+              route="/dashboard"
+            />
           </form>
         </div>
       </main>
