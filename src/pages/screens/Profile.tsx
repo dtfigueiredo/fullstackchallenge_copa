@@ -1,6 +1,5 @@
 import logo from '../../assets/logo/logo-fundo-vermelho.svg';
-import { Icon } from '../../components';
-import { Card } from '../../components/Card';
+import { Card, Icon, SelectDate } from '../../components';
 
 export const Profile = () => {
   return (
@@ -36,11 +35,7 @@ export const Profile = () => {
       <main className="w-11/12 max-w-[600px] mx-auto flex flex-col space-y-8 py-12 font-bold">
         <h2 className="text-red-500 text-xl lg:text-2xl">Seus palpites</h2>
 
-        <div className="w-64 mx-auto flex justify-between items-center text-red-500">
-          <Icon title="arrowLeft" />
-          <h4 className="text-red-700 text-lg">08 de outubro</h4>
-          <Icon title="arrowRight" />
-        </div>
+        <SelectDate />
 
         <div className="flex flex-col justify-center items-center space-y-4">
           <Card

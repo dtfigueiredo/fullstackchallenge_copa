@@ -1,5 +1,5 @@
-import { Icon, InputBlock, RegisterSubmitButton } from '../../components';
 import logo from '../../assets/logo/logo-fundo-branco.svg';
+import { Icon, InputBlock, RegisterSubmitButton } from '../../components';
 
 export const SignUp = () => {
   return (
