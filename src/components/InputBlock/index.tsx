@@ -6,6 +6,10 @@ interface InputBlockProps {
   type: string;
   name: string;
   id: string;
+  value: string;
+  formikErr: string | undefined | boolean | null;
+  onChange: (e: any) => void;
+  onBlur: (e: any) => void;
   placeholder: string;
   isPassword: boolean;
 }
@@ -15,6 +19,10 @@ export const InputBlock = ({
   type,
   name,
   id,
+  value,
+  formikErr,
+  onChange,
+  onBlur,
   placeholder,
   isPassword,
 }: InputBlockProps) => {
@@ -40,10 +48,15 @@ export const InputBlock = ({
 
       <div className="flex items-center relative">
         <input
-          className="w-full p-3 rounded-2xl text-base border border-grey-500 placeholder:text-base placeholder:text-grey-700 focus:outline focus:outline-1 focus:outline-grey-700"
+          className={`w-full p-3 rounded-2xl text-base border border-grey-500 placeholder:text-base placeholder:text-grey-700 focus:outline focus:outline-1 focus:outline-grey-700 ${
+            formikErr && 'border-red-300'
+          }`}
           type={type}
           name={name}
           id={id}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
           placeholder={placeholder}
         />
 
@@ -57,6 +70,10 @@ export const InputBlock = ({
           </button>
         )}
       </div>
+
+      {formikErr && (
+        <span className="text-sm text-red-500 ml-1">{formikErr}</span>
+      )}
     </div>
   );
 };

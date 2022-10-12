@@ -1,5 +1,16 @@
 import logo from '../../assets/logo/logo-fundo-branco.svg';
 import { Icon, InputBlock, RegisterSubmitButton } from '../../components';
+import { Formik, useFormik, Form, Field } from 'formik';
+import * as yup from 'yup';
+import axios from 'axios';
+
+const validationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Informe um email válido')
+    .required('Preencha seu email'),
+  password: yup.string().required('Preencha sua senha'),
+});
 
 export const Login = () => {
   return (
@@ -22,29 +33,51 @@ export const Login = () => {
             </h2>
           </header>
 
-          <form className="w-full mt-8 flex flex-col gap-4">
-            <InputBlock
-              label="Seu email"
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Digite seu email"
-              isPassword={false}
-            />
-            <InputBlock
-              label="Sua senha"
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Digite sua senha"
-              isPassword
-            />
+          <Formik
+            validationSchema={validationSchema}
+            onSubmit={(values) => {
+              console.log(values);
+            }}
+            initialValues={{
+              email: '',
+              password: '',
+            }}
+          >
+            {(props) => (
+              <form className="w-full mt-8 flex flex-col gap-4">
+                <InputBlock
+                  label="Seu email"
+                  type="email"
+                  name="email"
+                  id="email"
+                  formikErr={props.touched.email && props.errors.email}
+                  value={props.values.email}
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  placeholder="Digite seu email"
+                  isPassword={false}
+                />
+                <InputBlock
+                  label="Sua senha"
+                  type="password"
+                  name="password"
+                  id="password"
+                  formikErr={props.touched.password && props.errors.password}
+                  value={props.values.password}
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  placeholder="Digite sua senha"
+                  isPassword
+                />
 
-            <RegisterSubmitButton
-              title="Entrar"
-              route="/dashboard"
-            />
-          </form>
+                <RegisterSubmitButton
+                  disabled={!props.isValid}
+                  title="Entrar"
+                  route="/dashboard"
+                />
+              </form>
+            )}
+          </Formik>
         </div>
       </main>
     </main>
