@@ -1,10 +1,10 @@
-import { ReactComponent as backarrow } from './svgs/backarrow.svg';
-import { ReactComponent as arrowLeft } from './svgs/arrow-left.svg';
-import { ReactComponent as arrowRight } from './svgs/arrow-right.svg';
-import { ReactComponent as profile } from './svgs/profile.svg';
+import { ReactComponent as backarrow } from './svgs/backarrow.svg'
+import { ReactComponent as arrowLeft } from './svgs/arrow-left.svg'
+import { ReactComponent as arrowRight } from './svgs/arrow-right.svg'
+import { ReactComponent as profile } from './svgs/profile.svg'
 
 interface IconProps {
-  title: string;
+  title: string
 }
 
 const icons: { [key: string]: string } = {
@@ -12,10 +12,10 @@ const icons: { [key: string]: string } = {
   arrowLeft,
   arrowRight,
   profile,
-}; //mapa dos ícones
+} //mapa dos ícones
 
 export const Icon = ({ title }: IconProps) => {
-  const Element = icons[title];
+  const Element = icons[title]
 
-  return <Element />;
-};
+  return <Element />
+}
