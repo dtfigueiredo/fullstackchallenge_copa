@@ -1,8 +1,13 @@
+import axios from 'axios'
+import { Formik } from 'formik'
+import * as yup from 'yup'
+
 import logo from '../../assets/logo/logo-fundo-branco.svg'
 import { Icon, InputBlock, RegisterSubmitButton } from '../../components'
-import { Formik, useFormik, Form, Field } from 'formik'
-import * as yup from 'yup'
-import axios from 'axios'
+import { SpinnerBtn } from '../../components/Spinner'
+
+import { Navigate } from 'react-router-dom'
+import { useLocalStorage } from 'react-use'
 
 const validationSchema = yup.object().shape({
   name: yup.string().required('Preencha seu nome'),
@@ -12,8 +17,19 @@ const validationSchema = yup.object().shape({
 })
 
 export const SignUp = () => {
+  const [auth, setAuth] = useLocalStorage('auth', '')
+
+  if (auth) {
+    return (
+      <Navigate
+        to='/dashboard'
+        replace={true}
+      />
+    )
+  }
+
   return (
-    <main className='min-h-screen bg-silver'>
+    <section className='min-h-screen bg-silver'>
       <header className='flex justify-center items-center py-6 border-b border-red-300'>
         <img
           src={logo}
@@ -31,7 +47,9 @@ export const SignUp = () => {
           </header>
 
           <Formik
+            //validationSchema
             validationSchema={validationSchema}
+            //creating the user
             onSubmit={async (values) => {
               const result = await axios({
                 method: 'POST',
@@ -40,7 +58,32 @@ export const SignUp = () => {
                 data: values,
               })
 
-              console.log(result.data)
+              if (result.data) {
+                try {
+                  //logging the user
+                  const { data } = await axios({
+                    method: 'GET',
+                    baseURL: 'http://localhost:3000',
+                    url: '/login',
+                    //the auth prop manage the creation of the token64 for the login
+                    auth: {
+                      username: values.email, //username is the prop name that the backend expects
+                      password: values.password,
+                    },
+                  })
+
+                  try {
+                    if (data) {
+                      const { accessToken } = data
+                      setAuth(accessToken)
+                    }
+                  } catch (error) {
+                    console.log(error)
+                  }
+                } catch (error) {
+                  console.log(error)
+                }
+              }
             }}
             initialValues={{
               name: '',
@@ -102,15 +145,16 @@ export const SignUp = () => {
                 />
 
                 <RegisterSubmitButton
-                  disabled={!props.isValid}
-                  title='Entrar'
+                  disabled={!props.isValid || props.isSubmitting}
+                  title={props.isSubmitting ? <SpinnerBtn /> : 'Criar minha conta'}
                   route='/dashboard'
+                  isSubmitting
                 />
               </form>
             )}
           </Formik>
         </div>
       </main>
-    </main>
+    </section>
   )
 }

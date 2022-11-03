@@ -4,10 +4,9 @@ import { useState } from 'react'
 
 import { Icon } from '../Icon'
 
-const initialCupDate = '2022-11-20T00:00:00'
-
 export const SelectDate = () => {
-  const [currDate, setCurrDate] = useState(new Date(initialCupDate))
+  const initalDay = '2022-11-21T00:00:00.000Z'
+  const [currDate, setCurrDate] = useState(new Date(initalDay))
 
   const handlePrevDate = () => setCurrDate(subDays(currDate, 1))
   const handleNextDate = () => setCurrDate(addDays(currDate, 1))
@@ -18,13 +17,13 @@ export const SelectDate = () => {
 
   return (
     <div className='w-64 mx-auto flex justify-between items-center text-red-500'>
-      <button onClick={handlePrevDate}>
+      <button onClick={() => handlePrevDate()}>
         <Icon title='arrowLeft' />
       </button>
 
       <h4 className='text-red-700 text-lg'>{formatedDate}</h4>
 
-      <button onClick={handleNextDate}>
+      <button onClick={() => handleNextDate()}>
         <Icon title='arrowRight' />
       </button>
     </div>

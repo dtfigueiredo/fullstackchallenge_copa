@@ -1,8 +1,44 @@
+import axios from 'axios'
+import { format } from 'date-fns'
+import { useEffect, useState } from 'react'
+import { Navigate } from 'react-router-dom'
+import { useLocalStorage } from 'react-use'
+
 import logo from '../../assets/logo/logo-fundo-vermelho.svg'
 import { Icon, SelectDate } from '../../components'
 import { Card } from '../../components/Card'
 
 export const Dashboard = () => {
+  const [auth] = useLocalStorage('auth', '')
+  const [currDate, setCurrDate] = useState('2022-11-20T00:00:00.000Z')
+  const [games, setGames] = useState([])
+
+  if (!auth) {
+    return (
+      <Navigate
+        to='/'
+        replace={true}
+      />
+    )
+  }
+
+  const getGames = async () => {
+    const { data } = await axios({
+      method: 'GET',
+      baseURL: 'http://localhost:3000',
+      url: '/games',
+      params: {
+        gameHour: currDate,
+      },
+    })
+    setGames(data)
+  }
+
+  useEffect(() => {
+    getGames()
+    console.log(games)
+  }, [])
+
   return (
     <>
       <header className='py-6 bg-red-500 text-silver'>
@@ -31,21 +67,14 @@ export const Dashboard = () => {
         <SelectDate />
 
         <div className='flex flex-col justify-center items-center space-y-4'>
-          <Card
-            teamA={{ slug: 'bra' }}
-            teamB={{ slug: 'arg' }}
-            match={{ time: '07:00' }}
-          />
-          <Card
-            teamA={{ slug: 'jap' }}
-            teamB={{ slug: 'cor' }}
-            match={{ time: '10:00' }}
-          />
-          <Card
-            teamA={{ slug: 'esp' }}
-            teamB={{ slug: 'fra' }}
-            match={{ time: '13:00' }}
-          />
+          {games.map((game) => (
+            <Card
+              key={game.id}
+              teamA={game.teamA}
+              teamB={game.teamB}
+              match={format(new Date(game.gameHour), 'H:mm')}
+            />
+          ))}
         </div>
       </main>
     </>

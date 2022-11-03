@@ -1,11 +1,11 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import { Dashboard } from './screens/Dashboard';
-import ErrorPage from './screens/ErrorPage';
-import { Home } from './screens/Home';
-import { Login } from './screens/Login';
-import { Profile } from './screens/Profile';
-import { SignUp } from './screens/SignUp';
+import { Dashboard } from './screens/Dashboard'
+import ErrorPage from './screens/ErrorPage'
+import { Home } from './screens/Home'
+import { Login } from './screens/Login'
+import { Profile } from './screens/Profile'
+import { SignUp } from './screens/SignUp'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +29,6 @@ const router = createBrowserRouter([
     path: '/profile',
     element: <Profile />,
   },
-]);
+])
 
-export const AppRouter = () => <RouterProvider router={router} />;
+export const AppRouter = () => <RouterProvider router={router} />

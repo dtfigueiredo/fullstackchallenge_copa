@@ -28,7 +28,11 @@ module.exports = {
         700: '#300219',
       },
     },
-    extend: {},
+    extend: {
+      screens: {
+        xs: '376px',
+      },
+    },
   },
   plugins: [],
-};
+}

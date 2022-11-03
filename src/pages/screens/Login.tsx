@@ -1,8 +1,12 @@
+import axios from 'axios'
+import { Formik } from 'formik'
+import { Navigate } from 'react-router-dom'
+import { useLocalStorage } from 'react-use'
+import * as yup from 'yup'
+
 import logo from '../../assets/logo/logo-fundo-branco.svg'
 import { Icon, InputBlock, RegisterSubmitButton } from '../../components'
-import { Formik, useFormik, Form, Field } from 'formik'
-import * as yup from 'yup'
-import axios from 'axios'
+import { SpinnerBtn } from '../../components/Spinner'
 
 const validationSchema = yup.object().shape({
   email: yup.string().email('Informe um email válido').required('Preencha seu email'),
@@ -10,8 +14,19 @@ const validationSchema = yup.object().shape({
 })
 
 export const Login = () => {
+  const [auth, setAuth] = useLocalStorage('auth', '')
+
+  if (auth) {
+    return (
+      <Navigate
+        to='/dashboard'
+        replace={true}
+      />
+    )
+  }
+
   return (
-    <main className='min-h-screen bg-silver'>
+    <section className='min-h-screen bg-silver'>
       <header className='flex justify-center items-center py-6 border-b border-red-300'>
         <img
           src={logo}
@@ -29,16 +44,39 @@ export const Login = () => {
           </header>
 
           <Formik
+            //validationSchema
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values)
+            //loging the user and sending to the home page
+            onSubmit={async (values) => {
+              const { data } = await axios({
+                method: 'GET',
+                baseURL: 'http://localhost:3000',
+                url: '/login',
+                //the auth prop manage the creation of the token64 for the login
+                auth: {
+                  username: values.email, //username is the prop name that the backend expects
+                  password: values.password,
+                },
+              })
+
+              //saving the token into the local storage
+              try {
+                if (data) {
+                  const { accessToken } = data
+                  setAuth(accessToken)
+                }
+              } catch (error) {
+                console.log(error)
+              }
             }}
             initialValues={{
               email: '',
               password: '',
             }}>
             {(props) => (
-              <form className='w-full mt-8 flex flex-col gap-4'>
+              <form
+                onSubmit={props.handleSubmit}
+                className='w-full mt-8 flex flex-col gap-4'>
                 <InputBlock
                   label='Seu email'
                   type='email'
@@ -65,15 +103,16 @@ export const Login = () => {
                 />
 
                 <RegisterSubmitButton
-                  disabled={!props.isValid}
-                  title='Entrar'
+                  disabled={!props.isValid || props.isSubmitting}
+                  title={props.isSubmitting ? <SpinnerBtn /> : 'Entrar'}
                   route='/dashboard'
+                  isSubmitting
                 />
               </form>
             )}
           </Formik>
         </div>
       </main>
-    </main>
+    </section>
   )
 }
