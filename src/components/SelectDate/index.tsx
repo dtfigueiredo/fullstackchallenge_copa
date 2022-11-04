@@ -1,12 +1,12 @@
 import { addDays, format, subDays } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { useState } from 'react'
+import { useRecoilState } from 'recoil'
 
+import { initialCupDay } from '../../Atoms'
 import { Icon } from '../Icon'
 
 export const SelectDate = () => {
-  const initalDay = '2022-11-21T00:00:00.000Z'
-  const [currDate, setCurrDate] = useState(new Date(initalDay))
+  const [currDate, setCurrDate] = useRecoilState(initialCupDay)
 
   const handlePrevDate = () => setCurrDate(subDays(currDate, 1))
   const handleNextDate = () => setCurrDate(addDays(currDate, 1))

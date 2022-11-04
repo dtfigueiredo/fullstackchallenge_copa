@@ -1,13 +1,14 @@
 import axios from 'axios'
 import { Formik } from 'formik'
+import { Navigate } from 'react-router-dom'
+import { useLocalStorage } from 'react-use'
+import { useRecoilState } from 'recoil'
 import * as yup from 'yup'
 
 import logo from '../../assets/logo/logo-fundo-branco.svg'
+import { axiosError } from '../../Atoms'
 import { Icon, InputBlock, RegisterSubmitButton } from '../../components'
 import { SpinnerBtn } from '../../components/Spinner'
-
-import { Navigate } from 'react-router-dom'
-import { useLocalStorage } from 'react-use'
 
 const validationSchema = yup.object().shape({
   name: yup.string().required('Preencha seu nome'),
@@ -18,6 +19,7 @@ const validationSchema = yup.object().shape({
 
 export const SignUp = () => {
   const [auth, setAuth] = useLocalStorage('auth', '')
+  const [axiosErr, setAxiosErr] = useRecoilState(axiosError)
 
   if (auth) {
     return (
@@ -70,15 +72,11 @@ export const SignUp = () => {
                       username: values.email, //username is the prop name that the backend expects
                       password: values.password,
                     },
-                  })
+                  }).catch(() => setAxiosErr(true))
 
-                  try {
-                    if (data) {
-                      const { accessToken } = data
-                      setAuth(accessToken)
-                    }
-                  } catch (error) {
-                    console.log(error)
+                  if (data) {
+                    const { accessToken } = data
+                    setAuth(accessToken)
                   }
                 } catch (error) {
                   console.log(error)
@@ -150,6 +148,9 @@ export const SignUp = () => {
                   route='/dashboard'
                   isSubmitting
                 />
+                {axiosErr ? (
+                  <span className='text-sm text-red-500 ml-1'>Usuário ou senha incorretos</span>
+                ) : null}
               </form>
             )}
           </Formik>

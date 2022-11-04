@@ -1,18 +1,22 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useLocalStorage } from 'react-use'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 import logo from '../../assets/logo/logo-fundo-vermelho.svg'
+import { gamesList, initialCupDay } from '../../Atoms'
 import { Icon, SelectDate } from '../../components'
 import { Card } from '../../components/Card'
 
 export const Dashboard = () => {
   const [auth] = useLocalStorage('auth', '')
-  const [currDate, setCurrDate] = useState('2022-11-20T00:00:00.000Z')
-  const [games, setGames] = useState([])
+  const currDate = useRecoilValue(initialCupDay)
 
+  const [games, setGames] = useRecoilState(gamesList)
+
+  //if not logged in
   if (!auth) {
     return (
       <Navigate
@@ -22,6 +26,24 @@ export const Dashboard = () => {
     )
   }
 
+  //getUser
+  const getUser = async () => {
+    const user = await axios({
+      method: 'GET',
+      baseURL: 'http://localhost:3000',
+      url: '/users',
+    })
+    console.log(user)
+  }
+  //getUser use effect
+  useEffect(() => {
+    const controller = new AbortController()
+    getUser()
+
+    return () => controller.abort()
+  }, [])
+
+  //getGames
   const getGames = async () => {
     const { data } = await axios({
       method: 'GET',
@@ -33,11 +55,13 @@ export const Dashboard = () => {
     })
     setGames(data)
   }
-
+  //getGames use effect
   useEffect(() => {
+    const controller = new AbortController()
     getGames()
-    console.log(games)
-  }, [])
+
+    return () => controller.abort()
+  }, [currDate])
 
   return (
     <>
@@ -67,6 +91,7 @@ export const Dashboard = () => {
         <SelectDate />
 
         <div className='flex flex-col justify-center items-center space-y-4'>
+          {/* //TODO FIX THE TYPES  */}
           {games.map((game) => (
             <Card
               key={game.id}

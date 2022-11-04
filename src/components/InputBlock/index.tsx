@@ -1,5 +1,8 @@
 import { Eye, EyeClosed } from 'phosphor-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useRecoilState } from 'recoil'
+
+import { passwordType, showPasswordAtom } from '../../Atoms'
 
 interface InputBlockProps {
   label: string
@@ -26,8 +29,8 @@ export const InputBlock = ({
   placeholder,
   isPassword,
 }: InputBlockProps) => {
-  const [showPassword, setShowPassword] = useState(false)
-  const [inputType, setInputType] = useState(type)
+  const [showPassword, setShowPassword] = useRecoilState(showPasswordAtom)
+  const [inputType, setInputType] = useRecoilState(passwordType)
 
   const handleShowPassword = () => {
     if (!value) {

@@ -1,7 +1,8 @@
-import logo from '../../assets/logo/logo-fundo-vermelho.svg'
-import { Card, Icon, SelectDate } from '../../components'
 import { Navigate } from 'react-router-dom'
 import { useLocalStorage } from 'react-use'
+
+import logo from '../../assets/logo/logo-fundo-vermelho.svg'
+import { Card, Icon, SelectDate } from '../../components'
 
 export const Profile = () => {
   const [auth, setAuth, remove] = useLocalStorage('auth', '')
@@ -52,19 +53,9 @@ export const Profile = () => {
 
         <div className='flex flex-col justify-center items-center space-y-4'>
           <Card
-            teamA={{ slug: 'bra' }}
-            teamB={{ slug: 'arg' }}
-            match={{ time: '07:00' }}
-          />
-          <Card
-            teamA={{ slug: 'jap' }}
-            teamB={{ slug: 'cor' }}
-            match={{ time: '10:00' }}
-          />
-          <Card
-            teamA={{ slug: 'esp' }}
-            teamB={{ slug: 'fra' }}
-            match={{ time: '13:00' }}
+            teamA={'esp'}
+            teamB={'fra'}
+            match={'13:00'}
           />
         </div>
       </main>
