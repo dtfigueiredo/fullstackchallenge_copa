@@ -11,10 +11,17 @@ import { Icon, InputBlock, RegisterSubmitButton } from '../../components'
 import { SpinnerBtn } from '../../components/Spinner'
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required('Preencha seu nome'),
-  username: yup.string().required('Preencha seu nome'),
-  email: yup.string().email('Informe um email válido').required('Preencha seu email'),
-  password: yup.string().required('Preencha sua senha'),
+  name: yup.string().required('Preencha seu nome!'),
+  username: yup.string().required('Preencha seu nome!'),
+  email: yup.string().email('Informe um email válido').required('Preencha seu email!'),
+  password: yup
+    .string()
+    .required('Preencha sua senha!')
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/,
+      // /^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/,
+      'Sua senha deve conter pelo menos 8 caracteres, sendo pelo menos: um número, uma letra maiúscula, uma letra minúscula e um caracter especial!'
+    ),
 })
 
 export const SignUp = () => {
@@ -143,9 +150,8 @@ export const SignUp = () => {
 
                 <RegisterSubmitButton
                   disabled={!props.isValid || props.isSubmitting}
-                  title={props.isSubmitting ? <SpinnerBtn /> : 'Criar minha conta'}
                   route='/dashboard'
-                  isSubmitting
+                  isSubmitting={props.isSubmitting}
                 />
                 {axiosErr ? (
                   <span className='text-sm text-red-500 ml-1'>Usuário ou senha incorretos</span>

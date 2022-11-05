@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { Formik } from 'formik'
+import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useLocalStorage } from 'react-use'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import * as yup from 'yup'
 
 import logo from '../../assets/logo/logo-fundo-branco.svg'
-import { axiosError } from '../../Atoms'
+import { authUser, axiosError } from '../../Atoms'
 import { Icon, InputBlock, RegisterSubmitButton } from '../../components'
-import { SpinnerBtn } from '../../components/Spinner'
 
 const validationSchema = yup.object().shape({
   email: yup.string().email('Informe um email válido').required('Preencha seu email'),
@@ -16,8 +16,9 @@ const validationSchema = yup.object().shape({
 })
 
 export const Login = () => {
-  const [auth, setAuth] = useLocalStorage('natrave-login', {})
   const [axiosErr, setAxiosErr] = useRecoilState(axiosError)
+  const userAuth = useRecoilValue(authUser)
+  const [auth, setAuth] = useLocalStorage('natrave-login', userAuth)
 
   if (auth) {
     return (
@@ -62,7 +63,7 @@ export const Login = () => {
                 },
               }).catch(() => setAxiosErr(true))
 
-              //saving the token into the local storage
+              // saving the token into the local storage
               if (result) {
                 setAuth(result.data)
               }
@@ -102,9 +103,8 @@ export const Login = () => {
 
                 <RegisterSubmitButton
                   disabled={!props.isValid || props.isSubmitting}
-                  title={props.isSubmitting ? <SpinnerBtn /> : 'Entrar'}
                   route='/dashboard'
-                  isSubmitting
+                  isSubmitting={props.isSubmitting}
                 />
                 {axiosErr ? (
                   <span className='text-center text-red-500 ml-1'>Usuário ou senha incorretos</span>

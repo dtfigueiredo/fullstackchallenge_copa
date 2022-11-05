@@ -1,17 +1,18 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useLocalStorage } from 'react-use'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import logo from '../../assets/logo/logo-fundo-vermelho.svg'
-import { gamesList, initialCupDay } from '../../Atoms'
+import { authUser, gamesList, initialCupDay } from '../../Atoms'
 import { Icon, SelectDate } from '../../components'
 import { Card } from '../../components/Card'
 
 export const Dashboard = () => {
-  const [auth] = useLocalStorage('natrave-login', {})
+  const userAuth = useRecoilValue(authUser)
+  const [auth] = useLocalStorage('natrave-login', userAuth)
   const currDate = useRecoilValue(initialCupDay)
 
   const [games, setGames] = useRecoilState(gamesList)
@@ -73,10 +74,10 @@ export const Dashboard = () => {
         <SelectDate />
 
         <div className='flex flex-col justify-center items-center space-y-4'>
-          {/* //TODO FIX THE TYPES  */}
           {games.map((game) => (
             <Card
               key={game.id}
+              gameId={game.id}
               teamA={game.teamA}
               teamB={game.teamB}
               match={format(new Date(game.gameHour), 'H:mm')}

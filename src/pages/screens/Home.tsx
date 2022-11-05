@@ -1,11 +1,14 @@
 import { Navigate } from 'react-router-dom'
 import { useLocalStorage } from 'react-use'
+import { useRecoilValue } from 'recoil'
 
 import heroImg from '../../assets/imagem/img.png'
 import logo from '../../assets/logo/logo-fundo-vinho.svg'
+import { authUser } from '../../Atoms'
 
 export const Home = () => {
-  const [auth] = useLocalStorage('natrave-login', {})
+  const userAuth = useRecoilValue(authUser)
+  const [auth] = useLocalStorage('natrave-login', userAuth)
 
   if (auth) {
     return (
