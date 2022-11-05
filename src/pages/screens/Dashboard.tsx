@@ -11,7 +11,7 @@ import { Icon, SelectDate } from '../../components'
 import { Card } from '../../components/Card'
 
 export const Dashboard = () => {
-  const [auth] = useLocalStorage('auth', '')
+  const [auth] = useLocalStorage('natrave-login', {})
   const currDate = useRecoilValue(initialCupDay)
 
   const [games, setGames] = useRecoilState(gamesList)
@@ -25,23 +25,6 @@ export const Dashboard = () => {
       />
     )
   }
-
-  //getUser
-  const getUser = async () => {
-    const user = await axios({
-      method: 'GET',
-      baseURL: 'http://localhost:3000',
-      url: '/users',
-    })
-    console.log(user)
-  }
-  //getUser use effect
-  useEffect(() => {
-    const controller = new AbortController()
-    getUser()
-
-    return () => controller.abort()
-  }, [])
 
   //getGames
   const getGames = async () => {
@@ -59,7 +42,6 @@ export const Dashboard = () => {
   useEffect(() => {
     const controller = new AbortController()
     getGames()
-
     return () => controller.abort()
   }, [currDate])
 
@@ -81,7 +63,7 @@ export const Dashboard = () => {
 
         <div className='w-11/12 max-w-[600px] mx-auto'>
           <div className='flex flex-col space-y-4'>
-            <span className='text-base py-2'>Olá Daniel</span>
+            <span className='text-base py-2'>Olá {auth.user.name}</span>
             <h3 className='font-bold text-2xl'>Qual o seu palpite?</h3>
           </div>
         </div>

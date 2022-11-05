@@ -18,7 +18,7 @@ const validationSchema = yup.object().shape({
 })
 
 export const SignUp = () => {
-  const [auth, setAuth] = useLocalStorage('auth', '')
+  const [auth, setAuth] = useLocalStorage('natrave-login', {})
   const [axiosErr, setAxiosErr] = useRecoilState(axiosError)
 
   if (auth) {
@@ -63,7 +63,7 @@ export const SignUp = () => {
               if (result.data) {
                 try {
                   //logging the user
-                  const { data } = await axios({
+                  const result = await axios({
                     method: 'GET',
                     baseURL: 'http://localhost:3000',
                     url: '/login',
@@ -74,9 +74,8 @@ export const SignUp = () => {
                     },
                   }).catch(() => setAxiosErr(true))
 
-                  if (data) {
-                    const { accessToken } = data
-                    setAuth(accessToken)
+                  if (result) {
+                    setAuth(result.data)
                   }
                 } catch (error) {
                   console.log(error)

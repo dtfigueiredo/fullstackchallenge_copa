@@ -16,6 +16,11 @@ export const gamesList = atom<[]>({
   default: [],
 })
 
+export const loadingGames = atom<boolean>({
+  key: 'loadingGames',
+  default: false,
+})
+
 export const showPasswordAtom = atom<boolean>({
   key: 'showPassword',
   default: false,

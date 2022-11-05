@@ -5,9 +5,8 @@ import logo from '../../assets/logo/logo-fundo-vermelho.svg'
 import { Card, Icon, SelectDate } from '../../components'
 
 export const Profile = () => {
-  const [auth, setAuth, remove] = useLocalStorage('auth', '')
-
-  const handleClick = () => remove()
+  const [auth, remove] = useLocalStorage('natrave-login')
+  const handleClick = () => remove(null)
 
   if (!auth) {
     return (
@@ -41,7 +40,7 @@ export const Profile = () => {
               className='w-6 lg:w-10 h-6 lg:h-10 block cursor-pointer'>
               <Icon title='backarrow' />
             </a>
-            <h3 className='font-bold text-2xl'>Daniel Figueiredo</h3>
+            <h3 className='font-bold text-2xl'>{auth.user.name}</h3>
           </div>
         </div>
       </header>

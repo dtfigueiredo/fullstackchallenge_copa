@@ -5,7 +5,7 @@ import heroImg from '../../assets/imagem/img.png'
 import logo from '../../assets/logo/logo-fundo-vinho.svg'
 
 export const Home = () => {
-  const [auth, setAuth] = useLocalStorage('auth', '')
+  const [auth] = useLocalStorage('natrave-login', {})
 
   if (auth) {
     return (

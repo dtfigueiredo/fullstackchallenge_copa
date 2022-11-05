@@ -1,4 +1,4 @@
-import { addDays, format, subDays } from 'date-fns'
+import { addDays, compareDesc, format, subDays } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { useRecoilState } from 'recoil'
 

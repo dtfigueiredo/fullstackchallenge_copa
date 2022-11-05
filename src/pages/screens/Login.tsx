@@ -16,7 +16,7 @@ const validationSchema = yup.object().shape({
 })
 
 export const Login = () => {
-  const [auth, setAuth] = useLocalStorage('auth', '')
+  const [auth, setAuth] = useLocalStorage('natrave-login', {})
   const [axiosErr, setAxiosErr] = useRecoilState(axiosError)
 
   if (auth) {
@@ -51,7 +51,7 @@ export const Login = () => {
             validationSchema={validationSchema}
             //loging the user and sending to the home page
             onSubmit={async (values) => {
-              const { data } = await axios({
+              const result = await axios({
                 method: 'GET',
                 baseURL: 'http://localhost:3000',
                 url: '/login',
@@ -63,9 +63,8 @@ export const Login = () => {
               }).catch(() => setAxiosErr(true))
 
               //saving the token into the local storage
-              if (data) {
-                const { accessToken } = data
-                setAuth(accessToken)
+              if (result) {
+                setAuth(result.data)
               }
             }}
             initialValues={{
